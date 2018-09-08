@@ -349,6 +349,16 @@ class FormBuilder
     public function number(): string
     {
         return $this->_renderInput('number');
+	}
+	
+	/**
+     * Return a range input tag
+     *
+     * @return string
+     */
+    public function range(): string
+    {
+        return $this->_renderInput('range');
     }
 
     /**
@@ -584,7 +594,7 @@ class FormBuilder
         }
 
 		if (!$props['class'] && !in_array('class-form-control', $ignore)) {
-			if ($this->_type === 'email' || $this->_type === 'password' || $this->_type === 'number') {
+			if ($this->_type == 'email' || $this->_type == 'password' || $this->_type == 'number') {
 				$props['class'] = 'uk-input';
 			} else {
 				$props['class'] = 'uk-' . $this->_type;
@@ -778,7 +788,7 @@ class FormBuilder
 
         $this->_resetFlags();
 
-        return '<div class="uk-margin ' . $formGroup . $inline . '"><label class="uk-form-label" for="' . $for . '"><input ' . $attrs . '> ' . $label . '</label>' . $error . '</div>';
+        return '<div class="uk-margin ' . $formGroup . $inline . '"><label for="' . $for . '"><input ' . $attrs . '> ' . $label . '</label>' . $error . '</div>';
     }
 
     /**
