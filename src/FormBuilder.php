@@ -183,7 +183,15 @@ class FormBuilder
      *
      * @var boolean
      */
-    private $_passwordToggle;
+	private $_passwordToggle;
+	
+	/**
+	 * Icon to form input or button
+	 *
+	 * @var string
+	 * @var boolean
+	 */	
+	private $_icon;
 
     public function __construct()
     {
@@ -512,11 +520,21 @@ class FormBuilder
      */
     private function _renderButtonOrAnchor(): string
     {
+		$icon = $this->_getIcon('button');
+		
 		$disabled = $this->_disabled ? ' disabled' : '';
         $full = $this->_full ? ' uk-width-1-1' : '';
         $outline = $this->_outline ? ' uk-button-outline' : '';
         $size = $this->_size ? ' uk-button-' . $this->_size : '';
 		$value = $this->_e($this->_value);
+
+		if ($this->_icon && array_key_exists('flip', $this->_icon)) {
+			if ($this->_icon['flip']) {
+				$value = $value . $icon;
+			} else {
+				$value = $icon . $value;
+			}
+		}
 		
 		$color = ' uk-button-' . $this->_color;
 
@@ -563,7 +581,43 @@ class FormBuilder
         }
 
         return $result;
-    }
+	}
+	
+	/**
+     * Return a icon span
+     *
+     * @return string
+     */
+	private function _getIcon(string $render = 'input'): string
+	{
+		$icon = $this->_icon;
+
+		$result = '';
+
+		if ($icon) {
+			$class = '';
+
+			$flip = $icon['flip'];
+
+			if ($render === 'input') {
+				$class = 'uk-form-icon';
+
+				if ($flip && !$this->_passwordToggle) {
+					$class .= ' uk-form-icon-flip';
+				}
+			} else if ($render === 'button') {
+				$class = 'uk-margin-small-right';
+
+				if ($flip) {
+					$class = 'uk-margin-small-left';
+				}
+			}
+
+			$result = '<span class=" ' . $class . '" :uk-icon="\'' . $icon['icon'] . '\'"></span>';
+		}
+
+		return $result;
+	}
 
     /**
      * Return a string with HTML element attributes
@@ -800,28 +854,37 @@ class FormBuilder
     private function _renderWarpperCommomField(string $field): string
     {
         $error = $this->_getValidationFieldMessage();
-        $help = $this->_getHelpText();
+		$help = $this->_getHelpText();
+		$icon = $this->_getIcon();
 		$label = $this->_getLabel();
         
         $formGroup = $this->_formGroup;
 
-        $addon = '';
+        $passwordToggle = '';
 
         if ($this->_type === 'password' && $this->_passwordToggle) {
-			$addon = true;
+			$passwordToggle = true;
         }
 
 		$this->_resetFlags();
 		
 		$input = '<div class="uk-margin ' . $formGroup . '">' . $label . '<div class="uk-form-controls">';
 		
-		if ($addon) {
-			$input .= '<div class="uk-inline uk-width-1-1"><a href="javascript:void(0);" class="uk-form-icon uk-form-icon-flip" :uk-icon="\'unlock\'" uk-password-toggle></a>';
+		if ($passwordToggle || $icon) {
+			$input .= '<div class="uk-inline uk-width-1-1">';
+		}
+
+		if ($icon) {
+			$input .= $icon;
+		}
+
+		if ($passwordToggle) {
+			$input .= '<a href="javascript:void(0);" class="uk-form-icon uk-form-icon-flip" :uk-icon="\'unlock\'" uk-password-toggle></a>';
 		}
 
 		$input .= $field;
 
-		if ($addon) {
+		if ($passwordToggle || $icon) {
 			$input .= '</div>';
 		}
 
@@ -869,6 +932,7 @@ class FormBuilder
         $this->_formGroup = '';
         $this->_help = null;
         $this->_id = null;
+		$this->_icon = [];
         $this->_label = null;
         $this->_meta = [];
         $this->_multiple = false;
@@ -882,7 +946,7 @@ class FormBuilder
         $this->_size = null;
         $this->_type = null;
         $this->_url = null;
-        $this->_value = null;
+		$this->_value = null;
     }
 
     /**

@@ -419,6 +419,21 @@ Using locale, the package will look for a resources/lang/{CURRENT_LANG}/forms/us
 {!! Form::text('name', 'Name')->full(false) !!}
 ```
 
+### Icon
+
+| Param   | Type    | Default | Description     |
+| ------- | ------- | ------- | --------------- |
+| $icon   | string  | null    | UIKit icon name |
+| $flip   | boolean | false   | Side of icon    |
+
+```php
+// Examples
+
+{!! Form::text('email', 'Email')->icon('mail') !!}
+
+{!! Form::button('send')->icon('check', true) !!}
+```
+
 ### Id
 
 | Param | Type   | Default | Description |

@@ -648,6 +648,16 @@ class FormService
     public function passwordToggle($status = true): FormService
     {
         return $this->_set('passwordToggle', $status);
+	}
+	
+	/**
+     * Set icon for input
+     * @param bool $inline
+     * @return \EduardoVeiga\Uikit3Forms\FormService
+     */
+    public function icon(string $icon = '', bool $flip = false): FormService
+    {	
+		return $this->_set('icon', ['icon' => $icon, 'flip' => $flip]);
     }
 
     /**
