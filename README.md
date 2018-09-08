@@ -211,8 +211,6 @@ If you is using Laravel 5.5, the auto discovery feature will make everything for
 | Param  | Type   | Default | Description  |
 | ------ | ------ | ------- | ------------ |
 | $value | string | null    | Button value |
-| $color | string | null    | Button color |
-| $size  | string | null    | button size  |
 
 ###### Submit
 
@@ -225,7 +223,7 @@ If you is using Laravel 5.5, the auto discovery feature will make everything for
 
 ```php
 // Example
-{!! Form::button("Do something", "primary", "large") !!}
+{!! Form::button("Do something") !!}
 ```
 
 ###### Reset
