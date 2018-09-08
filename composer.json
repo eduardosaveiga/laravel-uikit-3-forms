@@ -1,0 +1,37 @@
+{
+	"name": "eduardosaveiga/laravel-uikit-3-forms",
+	"type": "package",
+	"description": "UIKit 3 form builder for Laravel 5",
+	"keywords": [
+		"laravel",
+		"uikit",
+		"forms",
+		"php",
+		"form-builder",
+		"composer",
+		"package"
+	],
+	"license": "MIT",
+	"authors": [{
+		"name": "Eduardo Veiga",
+		"email": "eduardosaveiga@gmail.com"
+	}],
+	"version": "1.0.0",
+	"minimum-stability": "dev",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"EduardoVeiga\\Uikit3Forms\\": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"EduardoVeiga\\Uikit3Forms\\Uikit3FormsServiceProvider"
+			],
+			"aliases": {
+				"Form": "EduardoVeiga\\Uikit3Forms\\Uikit3FormsFacade"
+			}
+		}
+	}
+}
