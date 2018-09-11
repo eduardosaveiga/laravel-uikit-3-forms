@@ -648,7 +648,12 @@ class FormBuilder
         }
 
 		if (!$props['class'] && !in_array('class-form-control', $ignore)) {
-			if ($this->_type == 'email' || $this->_type == 'password' || $this->_type == 'number') {
+			if (
+				$this->_type == 'email' ||
+				$this->_type == 'number' || 
+				$this->_type == 'password' || 
+				$this->_type == 'text'
+			) {
 				$props['class'] = 'uk-input';
 			} else {
 				$props['class'] = 'uk-' . $this->_type;
@@ -864,11 +869,21 @@ class FormBuilder
 
         if ($this->_type === 'password' && $this->_passwordToggle) {
 			$passwordToggle = true;
-        }
+		}
+		
+		if ($icon && array_key_exists('flip', $this->_icon)) {
+			if (!$this->_icon['flip']) {
+				$formGroup .= ' uk-form-with-icon';
+			} else {
+				$formGroup .= ' uk-form-with-icon-flip';
+			}
+		}
 
 		$this->_resetFlags();
 		
-		$input = '<div class="uk-margin ' . $formGroup . '">' . $label . '<div class="uk-form-controls">';
+		$input = '<div class="uk-margin ' . $formGroup . '">';
+
+		$input .= $label;
 		
 		if ($passwordToggle || $icon) {
 			$input .= '<div class="uk-inline uk-width-1-1">';
@@ -890,7 +905,7 @@ class FormBuilder
 
 		$input .= $help . $error;
 
-		$input .= '</div></div>';
+		$input .= '</div>';
 		
         return $input;
     }
