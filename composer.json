@@ -16,8 +16,8 @@
 		"name": "Eduardo Veiga",
 		"email": "eduardosaveiga@gmail.com"
 	}],
-	"version": "1.0.3",
-	"minimum-stability": "dev",
+	"version": "1.0.4",
+	"minimum-stability": "stable",
 	"require": {},
 	"autoload": {
 		"psr-4": {

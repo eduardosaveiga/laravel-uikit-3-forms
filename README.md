@@ -83,19 +83,6 @@ If you is using Laravel 5.5, the auto discovery feature will make everything for
 
 > Opening the form will add \_token field automatically for you
 
-#### Fieldset
-
-| Param   | Type   | Default | Description     |
-| ------- | ------ | ------- | --------------- |
-| $legend | string | null    | Fieldset Legend |
-
-```php
-// Example
-{!! Form::fieldsetOpen('Legend title') !!}
-// ... fieldset content
-{!! Form::fieldsetClose() !!}
-```
-
 ### Basic inputs
 
 #### Text inputs
@@ -394,9 +381,6 @@ Using locale, the package will look for a resources/lang/{CURRENT_LANG}/forms/us
 // Disabling a field
 {!! Form::text('name', 'Name')->disabled() !!}
 
-// Disabling a fieldset
-{!! Form::fieldsetOpen('User data')->disabled() !!}
-
 // You can use FALSE to turn off disabled status
 {!! Form::text('name', 'Name')->disabled(false) !!}
 ```
@@ -421,10 +405,13 @@ Using locale, the package will look for a resources/lang/{CURRENT_LANG}/forms/us
 
 ### Icon
 
-| Param   | Type    | Default | Description     |
-| ------- | ------- | ------- | --------------- |
-| $icon   | string  | null    | UIKit icon name |
-| $flip   | boolean | false   | Side of icon    |
+| Param   	 | Type    | Default | Description     			|
+| ------- 	 | ------- | ------- | --------------- 			|
+| $icon   	 | string  | null    | UIKit icon name 			|
+| $flip   	 | boolean | false   | Side of icon    			|
+| $clickable | boolean | false 	 | Icon inside an anchor	|
+|			 |		   |       	 | (only works with inputs) |
+| $attrs     | array   | empty   | Attributes               |
 
 ```php
 // Examples
@@ -447,7 +434,7 @@ Using locale, the package will look for a resources/lang/{CURRENT_LANG}/forms/us
 
 ### Id prefix
 
-All ids will prepend by this prefix like: prefix-myclass
+All ids will prepend by this prefix like: prefix-myid
 
 | Param   | Type   | Default | Description |
 | ------- | ------ | ------- | ----------- |
@@ -455,7 +442,7 @@ All ids will prepend by this prefix like: prefix-myclass
 
 ```php
 // Example
-{!!Form::open()->idPrefix('register')!!}
+{!!Form::open()->prefix('register')!!}
 ```
 
 ### Multipart
@@ -485,17 +472,6 @@ All ids will prepend by this prefix like: prefix-myclass
 {!! Form::open()->method('put') !!}
 {!! Form::open()->method('patch') !!}
 {!! Form::open()->method('delete') !!}
-```
-
-### explicit HTTP verbs
-
-```php
-// Examples
-{!! Form::open()->get() !!}
-{!! Form::open()->post() !!}
-{!! Form::open()->put() !!}
-{!! Form::open()->patch() !!}
-{!! Form::open()->delete() !!}
 ```
 
 ### Color
@@ -587,54 +563,4 @@ All ids will prepend by this prefix like: prefix-myclass
 
 // Number field
 {!! Form::render('text')->name('age')->label('Your age') !!}
-```
-
-### Form Group
-
-Additional class to form group (label + input)
-
-| Param      | Type   | Default | Description      |
-| ---------- | ------ | ------- | ---------------- |
-| $formGroup | string | null    | Form group class |
-
-```php
-{!! Form::text('name', 'Name')->formGroup('uk-width-1-2@s') !!}
-```
-
-```html
-<div class="uk-margin uk-width-1-2@s">
-    <label class="uk-form-label" for="name">Name</label>
-    <input type="text" class="uk-input @if ($errors->has('name')) uk-form-danger @endif " id="name" value="{{ old('name', $name) }}">
-    @if ($errors->has('name'))
-		<span class="uk-label uk-label-danger">
-			<small>{{ $errors->first('name') }}
-		</div>
-    @endif
-</div>
-```
-
-### Password Toggle
-
-Switch input type from password to text (this feature needs implements an jQuery event).
-*Only works with password input field.
-
-| Param           | Type    | Default | Description      |
-| --------------- | ------- | ------- | ---------------- |
-| $passwordToggle | boolean | true    | Password toggle  |
-
-```php
-{!! Form::text('password', 'Password')->type('password')->passwordToggle() !!}
-```
-```javascript
-$(function () {
-	$('[uk-password-toggle]').on('click', function (e) {
-		if ($(e.target).parent().next().attr('type') === 'password') {
-			$(e.target).parent().next().attr('type', 'text');
-			$(e.target).attr('uk-icon', 'lock');
-		} else {
-			$(e.target).parent().next().attr('type', 'password');
-			$(e.target).attr('uk-icon', 'unlock');
-		}
-	});
-});
 ```
